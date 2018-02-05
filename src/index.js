@@ -12,11 +12,12 @@ async function run() {
 
   await amqpCh.assertQueue("error", { durable: true });
   amqpCh.consume("error", async msg => {
-    const { name, message } = msg.properties.headers;
+    const fields = [];
+    for (let name in msg.properties.headers) {
+      fields.push(`${name}: ${msg.properties.headers[name]}`);
+    }
     const body = Buffer.from(msg.content).toString();
-    const result = ["Name: " + name, "Message: " + message, "Body:", body].join(
-      "\n"
-    );
+    const result = [...fields, "body:", body].join("\n");
     bot.sendMessage(config.telegram.chatId, result);
     amqpCh.ack(msg);
   });

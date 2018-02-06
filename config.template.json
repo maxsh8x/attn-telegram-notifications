@@ -4,6 +4,7 @@
     "host": "amqp://127.0.0.1"
   },
   "telegram": {
-    "token": "XXXXXXXXXXXXXXX"
+    "token": "XXXXXXXXXXXXXXX",
+    "chatId": "XXXXXXXXX"
   }
 }
